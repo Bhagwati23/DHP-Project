@@ -3,7 +3,7 @@
  * Handles all API requests to the backend
  */
 
-const API_BASE_URL = 'http://localhost:8000';  // Backend server URL
+const API_BASE_URL = 'https://interninsight-dashboard.onrender.com/';  // Backend server URL
 
 const apiClient = {
     /**
