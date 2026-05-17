@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Insights - Analytics</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-lg">
+        <div class="container">
+            <a class="navbar-brand gradient-text" href="index.html">
+                <i class="fas fa-chart-line me-2"></i>Internship Insights
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="analytics.html">
+                            <i class="fas fa-chart-bar me-1"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="key-insights.html">
+                            <i class="fas fa-lightbulb me-1"></i> Key Insights
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-info-circle me-1"></i> About
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5 pt-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1 class="display-4 gradient-text">Advanced Analytics</h1>
+                <p class="lead text-light-muted">
+                    Dive deeper into internship data metrics and trends with interactive analytics.
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="filter-wrapper p-3 rounded shadow-sm">
+                    <h5><i class="fas fa-filter me-2"></i>Filter Data</h5>
+                    <select id="domainFilter" class="form-select bg-dark text-light mb-2 border-secondary">
+                        <option value="All">All Domains</option>
+                        <!-- Options will be loaded dynamically -->
+                    </select>
+                    <select id="locationFilter" class="form-select bg-dark text-light mb-2 border-secondary">
+                        <option value="All">All Locations</option>
+                        <!-- Options will be loaded dynamically -->
+                    </select>
+                    <div class="mb-2">
+                        <label for="minSalaryFilter" class="form-label small text-light-muted">Min Salary (₹)</label>
+                        <input type="range" class="form-range" id="minSalaryFilter" min="0" max="40000" step="1000" value="0">
+                        <div class="d-flex justify-content-between">
+                            <span class="small text-light-muted">₹0</span>
+                            <span class="small text-light-muted" id="minSalaryValue">₹0</span>
+                            <span class="small text-light-muted">₹40k</span>
+                        </div>
+                    </div>
+                    <button id="applyFilters" class="btn btn-primary btn-sm w-100">
+                        <i class="fas fa-search me-1"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Image -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="analytics-hero p-4 rounded shadow-lg text-center">
+                    <div class="overlay"></div>
+                    <div class="hero-content position-relative">
+                        <h2 class="display-5 mb-3">Salary Insights by Domain</h2>
+                        <p class="lead">
+                            Discover which tech domains offer the best compensation packages
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salary Analysis Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card bg-dark-card shadow-lg">
+                    <div class="card-header bg-transparent border-0">
+                        <h4 class="text-light mb-0">
+                            <i class="fas fa-money-bill-wave me-2"></i>Salary Analysis
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-8 mb-4 mb-lg-0">
+                                <div class="chart-container" style="height: 400px;">
+                                    <canvas id="salaryByDomainChart"></canvas>
+                                </div>
+                                <div id="salaryChartLoader" class="chart-loader">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card bg-dark-secondary h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Salary Insights</h5>
+                                        <div class="mt-4" id="salaryStats">
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <span>Highest Paying Domain:</span>
+                                                <span id="highestPayingDomain" class="text-success">Loading...</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <span>Lowest Paying Domain:</span>
+                                                <span id="lowestPayingDomain" class="text-danger">Loading...</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <span>Average Internship Salary:</span>
+                                                <span id="averageSalary">Loading...</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <span>Median Internship Salary:</span>
+                                                <span id="medianSalary">Loading...</span>
+                                            </div>
+                                            <hr>
+                                            <p id="salaryAnalysis" class="small text-light-muted">
+                                                Loading salary analysis...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geographic Distribution Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card bg-dark-card shadow-lg">
+                    <div class="card-header bg-transparent border-0">
+                        <h4 class="text-light mb-0">
+                            <i class="fas fa-map-marked-alt me-2"></i>Geographic Distribution
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-7 mb-4 mb-lg-0">
+                                <div class="chart-container" style="height: 380px;">
+                                    <canvas id="locationDistributionChart"></canvas>
+                                </div>
+                                <div id="locationChartLoader" class="chart-loader">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-dark-secondary h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Location Insights</h5>
+                                        <div class="mt-4">
+                                            <div class="table-responsive">
+                                                <table class="table table-dark table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Location</th>
+                                                            <th>Opportunities</th>
+                                                            <th>Avg. Salary</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="locationTableBody">
+                                                        <tr>
+                                                            <td colspan="3" class="text-center">Loading data...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <p id="locationAnalysis" class="small text-light-muted mt-3">
+                                                Loading location analysis...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salary vs. Demand Analysis -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card bg-dark-card shadow-lg">
+                    <div class="card-header bg-transparent border-0">
+                        <h4 class="text-light mb-0">
+                            <i class="fas fa-balance-scale me-2"></i>Salary vs. Demand Analysis
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8 mb-4 mb-lg-0">
+                                <div class="chart-container" style="height: 400px;">
+                                    <canvas id="salaryVsDemandChart"></canvas>
+                                </div>
+                                <div id="scatterChartLoader" class="chart-loader">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card bg-dark-secondary h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demand vs. Salary Insights</h5>
+                                        <div class="mt-4">
+                                            <p class="text-light-muted">This scatter plot shows the relationship between demand (number of openings) and average salary for each domain.</p>
+                                            
+                                            <div class="demand-salary-legend mt-4">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="legend-box bg-primary opacity-50"></div>
+                                                    <span class="ms-2">High Demand, High Salary</span>
+                                                </div>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="legend-box bg-success opacity-50"></div>
+                                                    <span class="ms-2">Low Demand, High Salary</span>
+                                                </div>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="legend-box bg-danger opacity-50"></div>
+                                                    <span class="ms-2">High Demand, Low Salary</span>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="legend-box bg-warning opacity-50"></div>
+                                                    <span class="ms-2">Low Demand, Low Salary</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <p id="demandSalaryAnalysis" class="small text-light-muted mt-4">
+                                                Loading analysis...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Hiring Patterns -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card bg-dark-card shadow-lg">
+                    <div class="card-header bg-transparent border-0">
+                        <h4 class="text-light mb-0">
+                            <i class="fas fa-building me-2"></i>Company Hiring Patterns
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-7 mb-4 mb-lg-0">
+                                <div class="chart-container" style="height: 400px;">
+                                    <canvas id="companyHiringChart"></canvas>
+                                </div>
+                                <div id="companyChartLoader" class="chart-loader">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-dark-secondary h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Top Recruiters Insights</h5>
+                                        <div class="mt-4">
+                                            <div class="table-responsive">
+                                                <table class="table table-dark table-hover" id="topRecruitersTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Company</th>
+                                                            <th>Domain Focus</th>
+                                                            <th>Openings</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="companyTableBody">
+                                                        <tr>
+                                                            <td colspan="3" class="text-center">Loading data...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <p id="companyAnalysis" class="small text-light-muted mt-3">
+                                                Loading company hiring analysis...
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Opportunity Quadrants -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card bg-dark-card shadow-lg">
+                    <div class="card-header bg-transparent border-0">
+                        <h4 class="text-light mb-0">
+                            <i class="fas fa-th-large me-2"></i>Market Opportunity Analysis
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="marketQuadrants" class="market-quadrants-container">
+                            <div class="row mb-4">
+                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                    <div class="card bg-gradient-primary h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">High demand, High salary</h5>
+                                            <!-- <p class="card-subtitle mb-3 text-light-muted"></p> -->
+                                            <ul class="list-group list-group-flush bg-transparent" id="highOpportunityList">
+                                                <li class="list-group-item bg-transparent text-light">Loading opportunities...</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card bg-gradient-success h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Lower demand, high salary</h5>
+                                            <!-- <p class="card-subtitle mb-3 text-light-muted"></p> -->
+                                            <ul class="list-group list-group-flush bg-transparent" id="specialtyList">
+                                                <li class="list-group-item bg-transparent text-light">Loading opportunities...</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 mb-4 mb-lg-0">
+                                    <div class="card bg-gradient-danger h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">High demand, lower salary</h5>
+                                            <!-- <p class="card-subtitle mb-3 text-light-muted"></p> -->
+                                            <ul class="list-group list-group-flush bg-transparent" id="competitiveList">
+                                                <li class="list-group-item bg-transparent text-light">Loading opportunities...</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card bg-gradient-warning h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Lower demand, lower salary</h5>
+                                            <!-- <p class="card-subtitle mb-3 text-light-muted"></p> -->
+                                            <ul class="list-group list-group-flush bg-transparent" id="emergingList">
+                                                <li class="list-group-item bg-transparent text-light">Loading opportunities...</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtered Results Section -->
+        <div class="row mb-5" id="filteredResultsSection" style="display: none;">
+            <div class="col-12">
+                <div class="card bg-dark-card shadow-lg">
+                    <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+                        <h4 class="text-light mb-0">
+                            <i class="fas fa-list me-2"></i>Filtered Results
+                        </h4>
+                        <span class="badge bg-primary rounded-pill" id="resultCount">0 results</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Domain</th>
+                                        <th>Location</th>
+                                        <th>Avg. Salary</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="filteredResultsTable">
+                                    <tr>
+                                        <td colspan="4" class="text-center">Apply filters to see results</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark-secondary text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h5 class="gradient-text mb-3">Internship Insights</h5>
+                    <p class="text-light-muted">Empowering students and job seekers with data-driven internship market intelligence.</p>
+                </div>
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-light mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-light-muted text-decoration-none"><i class="fas fa-chevron-right me-2 small"></i>Dashboard</a></li>
+                        <li class="mb-2"><a href="analytics.html" class="text-light-muted text-decoration-none"><i class="fas fa-chevron-right me-2 small"></i>Analytics</a></li>
+                        <li class="mb-2"><a href="key-insights.html" class="text-light-muted text-decoration-none"><i class="fas fa-chevron-right me-2 small"></i>Key Insights</a></li>
+                        <li><a href="about.html" class="text-light-muted text-decoration-none"><i class="fas fa-chevron-right me-2 small"></i>About</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3 border-secondary">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-light-muted small mb-0">&copy; 2025 Internship Insights. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light-muted me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-light-muted me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light-muted me-3"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-light-muted"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action-btn">
+        <button class="btn btn-primary btn-lg rounded-circle shadow-lg" id="filterButton">
+            <i class="fas fa-filter"></i>
+        </button>
+    </div>
+
+    <!-- Bootstrap JS with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- API Client -->
+    <script src="js/api-client.js"></script>
+    
+    <!-- Utilities -->
+    <script src="js/utils.js"></script>
+    
+    <!-- Analytics Script -->
+    <script src="js/analytics.js"></script>
+</body>
+</html>
