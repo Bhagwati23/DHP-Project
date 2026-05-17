@@ -1,82 +1,97 @@
-# Intern Insight Dashboard
+<div align="center">
 
-🌐 Live Demo: https://interninsightdashboard.netlify.app/
+# 🚀 Intern Insight Dashboard
 
-## Overview
+### 📊 Full Stack Internship & Job Market Analytics Platform
 
-Intern Insight Dashboard is a full-stack web application that provides analytical insights into internship and job market trends using interactive visualizations and data-driven statistics.
+<p align="center">
+  Analyze internship trends, salary insights, hiring domains, and job market analytics using interactive dashboards and real-time data visualization.
+</p>
 
-The project processes job datasets and presents valuable insights such as:
+<br>
 
-- Most in-demand job domains
-- Salary analysis across domains
-- City-wise job distribution
-- Domain comparison analytics
-- Hiring trends
-- Key insights dashboard
-- Salary range analysis
-- Dynamic filtering system
+🌐 **Live Demo:** [Visit Website](https://interninsightdashboard.netlify.app/)
 
-This project demonstrates backend API development using Flask and frontend dashboard development using HTML, CSS, and JavaScript.
+</div>
 
 ---
 
-# Features
+# 📌 Overview
 
-## Dashboard Analytics
-- Top job domains visualization
-- Salary insights analysis
-- City-wise job opportunities
-- Hiring company trends
-- Key statistics dashboard
+Intern Insight Dashboard is a **full-stack data analytics web application** developed to visualize and analyze internship and job market trends.
 
-## Filtering System
+The platform processes job datasets and generates meaningful insights such as:
+
+- 📈 Most in-demand job domains
+- 💰 Salary analysis across domains
+- 🌍 City-wise opportunity distribution
+- 🏢 Hiring company trends
+- 📊 Domain comparison analytics
+- 🔍 Dynamic filtering & search
+- ⚡ Interactive dashboard statistics
+
+This project demonstrates strong understanding of:
+
+- Full Stack Development
+- REST API Integration
+- Data Analytics
+- Frontend-Backend Communication
+- Deployment & Hosting
+
+---
+
+# ✨ Features
+
+## 📊 Dashboard Analytics
+- Interactive analytics dashboard
+- Top hiring domains visualization
+- Salary trend analysis
+- Location-wise opportunities
+- Dynamic key insights cards
+
+## 🔍 Smart Filtering System
 - Filter by domain
 - Filter by location
-- Filter by salary
+- Salary-based filtering
+- Dynamic data updates
 
-## Domain Comparison
-- Compare two job domains
-- Compare average salaries
-- Compare top locations
+## ⚖️ Domain Comparison
+- Compare multiple job domains
+- Compare salary distributions
 - Compare hiring demand
+- Compare top hiring locations
 
-## REST API Backend
-- Flask-based API endpoints
-- JSON response handling
-- Dynamic data processing using Pandas
+## ⚙️ REST API Backend
+- Flask REST APIs
+- JSON-based responses
+- Dynamic data processing
+- Efficient API handling
 
-## Responsive UI
-- Interactive frontend
-- Responsive layouts
-- Dynamic charts and analytics
-
----
-
-# Tech Stack
-
-## Frontend
-- HTML5
-- CSS3
-- JavaScript
-
-## Backend
-- Python
-- Flask
-- Flask-CORS
-
-## Data Processing
-- Pandas
-- NumPy
-
-## Deployment
-- Frontend: Netlify
-- Backend: Render
-- Version Control: Git & GitHub
+## 📱 Responsive UI
+- Responsive web design
+- Interactive charts & components
+- Clean and modern interface
 
 ---
 
-# Project Structure
+# 🛠️ Tech Stack
+
+<div align="center">
+
+| Category | Technologies |
+|---|---|
+| 🎨 Frontend | HTML5, CSS3, JavaScript, React.js |
+| ⚙️ Backend | Python, Flask, Flask-CORS |
+| 📊 Data Processing | Pandas, NumPy |
+| 📈 Visualization | Chart.js |
+| 🚀 Deployment | Netlify, Render |
+| 🔧 Version Control | Git, GitHub |
+
+</div>
+
+---
+
+# 📂 Project Structure
 
 ```text
 DHP-Project-main/
@@ -90,11 +105,160 @@ DHP-Project-main/
 │
 ├── frontend/
 │   ├── index.html
-│   ├── about.html
 │   ├── analytics.html
 │   ├── key-insights.html
+│   ├── about.html
 │   ├── css/
 │   ├── js/
 │   └── images/
 │
 └── README.md
+```
+
+---
+
+# 🔗 API Endpoints
+
+| Endpoint | Description |
+|---|---|
+| `/api/top-domains` | Returns top job domains |
+| `/api/salary-insights` | Salary analysis by domain |
+| `/api/jobs-by-city` | City-wise job opportunities |
+| `/api/company-hiring` | Hiring company statistics |
+| `/api/filter-data` | Dynamic job filtering |
+| `/api/compare-domains` | Compare two job domains |
+| `/api/key-insights` | Dashboard summary insights |
+
+---
+
+# ⚡ Installation & Setup
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone <repository-url>
+cd DHP-Project-main
+```
+
+---
+
+# ⚙️ Backend Setup
+
+## Navigate to Backend Folder
+
+```bash
+cd backend
+```
+
+## Create Virtual Environment
+
+### Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Linux / Mac
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Run Flask Server
+
+```bash
+python app.py
+```
+
+Backend will run on:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+# 🎨 Frontend Setup
+
+Open frontend using:
+
+- VS Code Live Server
+- Any Static Server
+
+Main file:
+
+```text
+frontend/index.html
+```
+
+---
+
+# 🚀 Deployment
+
+| Service | Platform |
+|---|---|
+| Frontend Hosting | Netlify |
+| Backend Hosting | Render |
+
+---
+
+# 📚 Learning Outcomes
+
+This project helped in gaining practical experience in:
+
+- ✅ Full Stack Web Development
+- ✅ REST API Development
+- ✅ Flask Backend Architecture
+- ✅ Data Analysis using Pandas
+- ✅ Frontend & Backend Integration
+- ✅ JSON API Handling
+- ✅ Deployment using Render & Netlify
+- ✅ Git & GitHub Workflow
+
+---
+
+# 🔮 Future Improvements
+
+- 🔐 Authentication System
+- 🤖 AI-based Recommendations
+- 📡 Real-time Job Scraping
+- 🗄️ Database Integration
+- 📄 Export Reports Feature
+- 📊 Advanced Data Visualizations
+- 🌐 Multi-user Support
+
+---
+
+# 👨‍💻 Author
+
+## Bhagwati
+
+🔗 [GitHub](https://github.com/Bhagwati23)
+
+🔗 [LinkedIn](https://www.linkedin.com/in/bhanu-23/)
+
+---
+
+# ⭐ Support
+
+If you liked this project:
+
+⭐ Star the repository  
+🍴 Fork the project  
+📢 Share with others
+
+---
+
+<div align="center">
+
+### 🚀 Built with Flask, JavaScript & Data Analytics
+
+</div>
